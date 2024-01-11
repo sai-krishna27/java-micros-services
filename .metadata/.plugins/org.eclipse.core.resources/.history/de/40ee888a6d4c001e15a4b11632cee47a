@@ -1,0 +1,47 @@
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.example.demo.Entity.*;
+import com.example.demo.repo.*;
+
+@SpringBootApplication
+public class MovieTicketBookingApplication implements CommandLineRunner {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MovieTicketBookingApplication.class, args);
+	}
+	
+	@Autowired
+	public UserRepo userRepo;
+	
+	@Autowired
+	public MovieRepo movieRepo;
+	
+	@Autowired
+	public AdminRepo adminRepo;
+	
+	@Autowired
+	public OrderRepo orderRepo;
+	
+	@Autowired
+	public CartRepo cartRepo;
+
+	@Override
+	public void run(String... args) throws Exception {
+		
+		userRepo.save(new User("john","john@gmail.com","John@123","7894561231","new york"));
+		movieRepo.save(new Movie("john wich 4","gangster","02:45:32",5.0f,250f,
+				"https://static.wikia.nocookie.net/john-wick8561/images/7/7c/Chapterfour.jpeg/revision/latest?cb=20230523074638",
+				"action",true));
+		adminRepo.save(new Admin("admin@gmail.com","admin","Admin@123"));
+		orderRepo.save(new Order("john wich 4",2,500f,"john@gmail.com","2023-09-06",568421));
+		cartRepo.save(new Cart("john@gmail.com",2,250f,"john wich 4"));
+		
+		
+	}
+
+}

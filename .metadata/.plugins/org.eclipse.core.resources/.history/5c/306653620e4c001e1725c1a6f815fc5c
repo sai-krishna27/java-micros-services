@@ -1,0 +1,19 @@
+package com.example.demo.repo;
+
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+import com.example.demo.Entity.Cart;
+
+@Transactional
+public interface CartRepo extends JpaRepository<Cart, Long>{
+	
+	String query="delete from Cart c where c.email=:email";
+	@Transactional 
+	@Modifying
+	@Query(query)
+	public void deleteByEmail(String email);
+}

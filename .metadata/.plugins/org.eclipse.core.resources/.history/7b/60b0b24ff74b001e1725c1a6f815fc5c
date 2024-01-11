@@ -1,0 +1,84 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Entity.Movie;
+import com.example.demo.repo.MovieRepo;
+
+@Service
+public class MovieService {
+
+	@Autowired
+	MovieRepo movieRepo;
+
+	
+	public Movie addNewMovie(Movie movie) {
+		try {
+			Movie movieAddResult = movieRepo.save(movie);
+			if (movieAddResult != null) {
+				return movieAddResult;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	
+	public List<Movie> viewAllMovie() {
+		try {
+			return movieRepo.findAll();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+    
+    public Movie getMovieById(int movieId) {
+        try {
+            Movie movie = movieRepo.findById(movieId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Movie not exist with id: " + movieId));
+            return movie;
+        } catch (Exception e) {
+            throw new RuntimeException(e); // Re-throw the exception
+        }
+    }
+
+	
+	public Movie updateMovieById(Movie movie) {
+		try {
+			movieRepo.saveAndFlush(movie);
+			return movie;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	
+	public boolean deleteMovieById(int movieId) {
+		try {
+			movieRepo.deleteById(movieId);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	
+	public List<Movie> searchMovie(String movie) {
+		try {
+			return movieRepo.searchMovie(movie);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+
+}

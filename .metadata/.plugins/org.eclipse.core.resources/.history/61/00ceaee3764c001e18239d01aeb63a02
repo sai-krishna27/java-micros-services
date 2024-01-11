@@ -1,0 +1,54 @@
+package com.example.demo.Entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="bookings")
+public class Order {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+	
+	@Column(name="movie")
+	private String movie;
+
+	@Column(name = "quantity")
+	private int quantity;
+
+	@Column(name = "price")
+	private float price;
+
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "current_date")
+	private String currDate;
+	
+	@Column(name = "transaction_id")
+	private long transactionId;
+
+	public Order(String movie, int quantity, float price, String email, String currDate, long transactionId) {
+		this.movie = movie;
+		this.quantity = quantity;
+		this.price = price;
+		this.email = email;
+		this.currDate = currDate;
+		this.transactionId = transactionId;
+	}
+
+	
+
+}

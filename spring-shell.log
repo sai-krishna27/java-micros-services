@@ -1,0 +1,3 @@
+// dataflow 1.2.0.RELEASE log opened at 2023-09-03 21:51:16
+// dataflow 1.2.0.RELEASE log opened at 2023-09-03 21:53:12
+// [failed] app register --name source-file --type source --uri maven://com.example:scdf-source:jar:0.0.1-SNAPSHOT

@@ -1,0 +1,61 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Entity.Order;
+import com.example.demo.repo.OrderRepo;
+
+@Service
+public class OrderService{
+
+	@Autowired
+	CartRepo cartRepo;
+	
+	@Autowired 
+	OrderRepo OrderRepo;
+	
+	
+	public boolean createOrder(String emailId) {
+		try {
+			List<Cart> allCart = cartRepo.findAll();
+			int totalQunatity = 0;
+			float totalPrice = 0;
+			for (Cart cartData : allCart) {
+				totalPrice += cartData.getPrice();
+				totalQunatity += cartData.getQuantity();
+			}
+			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
+			int randomWithMathRandom = (int) ((Math.random() * (9999 - 2222)) + 2222);
+			Order Order = new Order(totalQunatity, totalPrice, emailId, currentDate, randomWithMathRandom);
+			OrderRepo.save(Order);
+			cartRepo.deleteAll();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
+
+	
+	public List<Order> getCustomerOrder(String emailId) {
+		try {
+			return OrderRepo.searchByEmail(emailId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	
+	public List<Order> getAllOrder() {
+		try {
+			return OrderRepo.findAll();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+}

@@ -1,0 +1,34 @@
+package com.example.demo.proxy;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.example.demo.entity.Book;
+import com.example.demo.fallback.BookServiceFallback;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
+@FeignClient(name="book-service")
+public interface BookServiceProxy {
+	
+	@CircuitBreaker(name="book-service",fallbackMethod = "fallBackOfGetBookById")
+	@GetMapping("book/{id}")
+	public Book getBookById(@PathVariable int id);
+	
+	
+	@CircuitBreaker(name="book-service",fallbackMethod = "fallBackOfGetAllBooks")
+	@GetMapping("books")
+	public List<Book> getAllBooks();
+	
+	public default Book fallBackOfGetBookById(int id) {
+		return new Book(id,"101 Windows Phone 7 Apps","sai","978-1-59327-843-4",288,2018);
+	}
+
+	public default List<Book> fallBackOfGetAllBooks() {
+		return new ArrayList<Book>();
+	}
+}

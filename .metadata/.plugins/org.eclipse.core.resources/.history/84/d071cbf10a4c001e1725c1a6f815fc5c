@@ -1,0 +1,32 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Entity.Order;
+import com.example.demo.repo.CartRepo;
+import com.example.demo.repo.OrderRepo;
+
+@Service
+public class OrderService{
+
+	@Autowired
+	CartRepo cartRepo;
+	
+	@Autowired 
+	OrderRepo OrderRepo;
+	
+	
+	public Order addOrder(Order order) {
+		return OrderRepo.save(order);
+	}
+
+	
+	public List<Order> getCustomerOrder(String emailId) {
+		return OrderRepo.searchByEmail(emailId);
+	}
+
+	
+}
